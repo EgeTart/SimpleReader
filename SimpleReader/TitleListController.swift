@@ -16,6 +16,8 @@ class TitleListController: UIViewController {
     
     var articlesTitles: [ArticleTitle]!
     
+    var selectedArticleTitle: ArticleTitle!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     
@@ -30,6 +32,12 @@ class TitleListController: UIViewController {
         titleTableView.tableFooterView = UIView()
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ShowArticle" {
+            let articleContainerController = segue.destination as! ArticleContainerController
+            articleContainerController.articleTitle = selectedArticleTitle
+        }
+    }
 }
 
 
@@ -55,6 +63,10 @@ extension TitleListController: UITableViewDataSource {
 extension TitleListController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        selectedArticleTitle = articlesTitles[indexPath.row]
+        
+        performSegue(withIdentifier: "ShowArticle", sender: self)
         
         tableView.deselectRow(at: indexPath, animated: true)
     }
