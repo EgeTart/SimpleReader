@@ -37,6 +37,19 @@ class ArticleContainerController: UIViewController {
         pageViewController.dataSource = self
     }
 
+    
+    /// 点击按钮切换文章的类型(原文或者译文)
+    ///
+    /// - Parameter sender: 文章上方的原文或译文按钮
+    @IBAction func switchArticleType(_ sender: UIButton) {
+        if sender.tag == 101 {
+            pageViewController.setViewControllers([articleController], direction: .reverse, animated: true, completion: nil)
+        }
+        else {
+            pageViewController.setViewControllers([translationController], direction: .forward, animated: true, completion: nil)
+        }
+    }
+    
 }
 
 
