@@ -71,6 +71,35 @@ class DatabaseManager {
         return articleContent
     }
     
+    func loadWords() -> [[String]] {
+        let queryWords = "SELECT word FROM words WHERE level = ?"
+        
+        let maxLevel = 6
+        
+        var words = [[String]]()
+        
+        for level in 0...maxLevel {
+            do {
+                
+                var wordsInLevel = [String]()
+                
+                let wordsRecords = try database.executeQuery(queryWords, values: [level])
+                
+                while wordsRecords.next() {
+                    let word = wordsRecords.string(forColumn: "word")
+                    wordsInLevel.append(word!)
+                }
+                
+                words.append(wordsInLevel)
+            }
+            catch {
+                print(error)
+            }
+        }
+        
+        return words
+    }
+    
     deinit {
         database.close()
     }

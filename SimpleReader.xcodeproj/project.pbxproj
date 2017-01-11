@@ -19,6 +19,7 @@
 		F68C38371E23ECF8005B7BFB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F68C38351E23ECF8005B7BFB /* Main.storyboard */; };
 		F68C38391E23ECF8005B7BFB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F68C38381E23ECF8005B7BFB /* Assets.xcassets */; };
 		F68C383C1E23ECF8005B7BFB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F68C383A1E23ECF8005B7BFB /* LaunchScreen.storyboard */; };
+		F69F70E01E24F4B400CE0F1C /* HighlightTextStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69F70DF1E24F4B400CE0F1C /* HighlightTextStorage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +39,7 @@
 		F68C38381E23ECF8005B7BFB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F68C383B1E23ECF8005B7BFB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F68C383D1E23ECF8005B7BFB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F69F70DF1E24F4B400CE0F1C /* HighlightTextStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HighlightTextStorage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +104,7 @@
 				F6866BD91E24A35B00E3E110 /* ArticleContainerController.swift */,
 				F6866BDB1E24A76500E3E110 /* ArticleController.swift */,
 				F6866BDD1E24A77400E3E110 /* TranslationController.swift */,
+				F69F70DF1E24F4B400CE0F1C /* HighlightTextStorage.swift */,
 			);
 			path = SimpleReader;
 			sourceTree = "<group>";
@@ -238,6 +241,7 @@
 				F68C38321E23ECF8005B7BFB /* AppDelegate.swift in Sources */,
 				F6866BD61E2481A900E3E110 /* DatabaseManager.swift in Sources */,
 				F6866BDE1E24A77400E3E110 /* TranslationController.swift in Sources */,
+				F69F70E01E24F4B400CE0F1C /* HighlightTextStorage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -361,6 +365,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = L225J6UWE9;
 				INFOPLIST_FILE = SimpleReader/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.egetart.SimpleReader;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -375,6 +380,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = L225J6UWE9;
 				INFOPLIST_FILE = SimpleReader/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.egetart.SimpleReader;
 				PRODUCT_NAME = "$(TARGET_NAME)";

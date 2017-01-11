@@ -19,5 +19,5 @@ class TranslationController: UIViewController {
 
         translationTextView.text = translation
     }
-
+    
 }
