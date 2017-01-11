@@ -11,8 +11,8 @@ import UIKit
 class ArticleController: UIViewController {
 
     @IBOutlet weak var toolbar: UIToolbar!
-    
     @IBOutlet weak var toolbarBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var filterButtonItem: UIBarButtonItem!
     
     var articleTextView: UITextView!
     var textStorage: HighlightTextStorage!
@@ -49,7 +49,43 @@ class ArticleController: UIViewController {
     }()
     
     var isHighlight = false
+    
     var startLevel = 0
+    var endLevel = 6
+    
+    var isFilterRangeViewShowed = false
+    
+    // 显示进行单词过滤的slider
+    lazy var filterRangeView: FilterRangeView = {
+        
+        let width = UIScreen.main.bounds.width - 20.0
+        let height: CGFloat = 100.0
+        
+        let x: CGFloat = 10.0
+        let y = self.toolbar.frame.origin.y - 120.0
+        
+        let tempFilterRangeView = FilterRangeView(frame: CGRect(x: x, y: y, width: width, height: height))
+        
+        tempFilterRangeView.sliderView.delegate = self
+        
+        return tempFilterRangeView
+    }()
+    
+    // 得到UIPageViewController的 scrollView, 以便禁止UIPageViewController的滑动
+    lazy var parentScrollView: UIScrollView = {
+        var scrollView: UIScrollView!
+        
+        let parentController = self.parent! as! UIPageViewController
+        
+        for subview in parentController.view.subviews {
+            if subview.isKind(of: UIScrollView.self) {
+                scrollView = subview as! UIScrollView
+                break
+            }
+        }
+        
+        return scrollView
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,7 +94,11 @@ class ArticleController: UIViewController {
         
         toolbarBottomConstraint.constant = -44.0
         
+        filterButtonItem.isEnabled = false
+        
         self.view.bringSubview(toFront: toolbar)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(ArticleController.preferredContentSizeChanged(notification:)), name: NSNotification.Name.UIContentSizeCategoryDidChange, object: nil)
     }
     
     override func viewDidLayoutSubviews() {
@@ -89,11 +129,11 @@ class ArticleController: UIViewController {
         view.addSubview(articleTextView)
     }
     
-    func highlight(satrtLevel: Int) {
+    func highlightWords(satrtLevel: Int, endLevel: Int) {
         
-        articleTextView.textStorage.setAttributes(normalAttributes, range: NSMakeRange(0, (article as NSString).length))
+        clearHighlight()
 
-        for level in satrtLevel..<wordsToHighlight.count {
+        for level in satrtLevel...min(endLevel, wordsToHighlight.count - 1) {
             let words = wordsToHighlight[level]
             
             for word in words {
@@ -103,13 +143,38 @@ class ArticleController: UIViewController {
         }
     }
     
-    @IBAction func highlightWords(_ sender: UIBarButtonItem) {
-        highlight(satrtLevel: startLevel)
-        
-        startLevel += 1
+    func clearHighlight() {
+        articleTextView.textStorage.setAttributes(normalAttributes, range: NSMakeRange(0, (article as NSString).length))
     }
     
-    @IBAction func filetrWords(_ sender: UIBarButtonItem) {
+    func preferredContentSizeChanged(notification: Notification) {
+        articleTextView.font = UIFont.preferredFont(forTextStyle: .body)
+    }
+    
+    @IBAction func highlightWords(_ sender: UIBarButtonItem) {
+        if isHighlight {
+            clearHighlight()
+            filterButtonItem.isEnabled = false
+        }
+        else {
+            highlightWords(satrtLevel: startLevel, endLevel: endLevel)
+            filterButtonItem.isEnabled = true
+        }
+        
+        isHighlight = !isHighlight
+    }
+    
+    @IBAction func filterWords(_ sender: UIBarButtonItem) {
+        if isFilterRangeViewShowed {
+            filterRangeView.removeFromSuperview()
+            parentScrollView.isScrollEnabled = true
+        }
+        else {
+            self.view.addSubview(filterRangeView)
+            parentScrollView.isScrollEnabled = false
+        }
+        
+        isFilterRangeViewShowed = !isFilterRangeViewShowed
     }
     
     @IBAction func changeFontSize(_ sender: UIBarButtonItem) {
@@ -143,4 +208,16 @@ extension ArticleController: UITextViewDelegate {
         }
     }
     
+}
+
+extension ArticleController: NHRangeSliderViewDelegate {
+    
+    func sliderValueChanged(slider: NHRangeSlider?) {
+        startLevel = Int(slider!.lowerValue)
+        endLevel = Int(slider!.upperValue)
+        
+        highlightWords(satrtLevel: startLevel, endLevel: endLevel)
+        
+        print(startLevel, endLevel)
+    }
 }

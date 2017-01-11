@@ -18,6 +18,11 @@ class TranslationController: UIViewController {
         super.viewDidLoad()
 
         translationTextView.text = translation
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(ArticleController.preferredContentSizeChanged(notification:)), name: NSNotification.Name.UIContentSizeCategoryDidChange, object: nil)
     }
     
+    func preferredContentSizeChanged(notification: Notification) {
+        translationTextView.font = UIFont.preferredFont(forTextStyle: .body)
+    }
 }

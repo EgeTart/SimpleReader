@@ -44,7 +44,7 @@
                                                     <rect key="frame" x="15" y="25" width="52" height="18"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
-                                                    <nil key="textColor"/>
+                                                    <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -178,7 +178,7 @@
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="y8B-dc-0cH"/>
                                     <barButtonItem image="filter_icon" id="BE2-ga-6QN">
                                         <connections>
-                                            <action selector="filetrWords:" destination="mEg-wz-zd6" id="Bf8-ku-Flc"/>
+                                            <action selector="filterWords:" destination="mEg-wz-zd6" id="i6z-fk-CM5"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="ev5-pt-sFu"/>
@@ -201,6 +201,7 @@
                     <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <nil key="simulatedStatusBarMetrics"/>
                     <connections>
+                        <outlet property="filterButtonItem" destination="BE2-ga-6QN" id="kVl-lQ-wF0"/>
                         <outlet property="toolbar" destination="IrX-Kl-qWS" id="qzA-V3-6xG"/>
                         <outlet property="toolbarBottomConstraint" destination="t8z-AF-GCZ" id="F7A-2G-2rc"/>
                     </connections>
