@@ -15,6 +15,8 @@ class DatabaseManager {
     
     private var database: FMDatabase!
     
+    private var words = [[String]]()
+    
     private init() {
         
         guard let path = Bundle.main.path(forResource: "nce_articles", ofType: "sqlite3") else { return }
@@ -72,32 +74,51 @@ class DatabaseManager {
     }
     
     func loadWords() -> [[String]] {
-        let queryWords = "SELECT word FROM words WHERE level = ?"
         
-        let maxLevel = 6
-        
-        var words = [[String]]()
-        
-        for level in 0...maxLevel {
-            do {
-                
-                var wordsInLevel = [String]()
-                
-                let wordsRecords = try database.executeQuery(queryWords, values: [level])
-                
-                while wordsRecords.next() {
-                    let word = wordsRecords.string(forColumn: "word")
-                    wordsInLevel.append(word!)
+        if words.isEmpty {
+            let queryWords = "SELECT word FROM words WHERE level = ?"
+            
+            let maxLevel = 6
+            
+            for level in 0...maxLevel {
+                do {
+                    
+                    var wordsInLevel = [String]()
+                    
+                    let wordsRecords = try database.executeQuery(queryWords, values: [level])
+                    
+                    while wordsRecords.next() {
+                        let word = wordsRecords.string(forColumn: "word")
+                        wordsInLevel.append(word!)
+                    }
+                    
+                    words.append(wordsInLevel)
                 }
-                
-                words.append(wordsInLevel)
-            }
-            catch {
-                print(error)
+                catch {
+                    print(error)
+                }
             }
         }
         
         return words
+    }
+    
+    func queryWordLevel(word: String) -> Int? {
+        let queryLevel = "SELECT level FROM words WHERE word = ?"
+        
+        do {
+            let levelRecord = try database.executeQuery(queryLevel, values: [word])
+            
+            if levelRecord.next() {
+                let level = levelRecord.int(forColumn: "level")
+                return Int(level)
+            }
+        }
+        catch {
+            print(error)
+        }
+        
+        return nil
     }
     
     deinit {

@@ -12,6 +12,7 @@ class TranslationController: UIViewController {
 
     @IBOutlet weak var translationTextView: UITextView!
     
+    // 文章译文内容
     var translation: String!
     
     override func viewDidLoad() {

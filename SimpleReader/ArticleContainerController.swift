@@ -9,7 +9,9 @@
 import UIKit
 
 class ArticleContainerController: UIViewController {
-
+    
+    @IBOutlet weak var titleItem: UINavigationItem!
+    
     var pageViewController: UIPageViewController!
     
     var articleController: ArticleController!
@@ -35,6 +37,8 @@ class ArticleContainerController: UIViewController {
         
         pageViewController.setViewControllers([articleController], direction: .forward, animated: true, completion: nil)
         pageViewController.dataSource = self
+        
+        titleItem.title = articleTitle.title
     }
 
     
@@ -43,9 +47,11 @@ class ArticleContainerController: UIViewController {
     /// - Parameter sender: 文章上方的原文或译文按钮
     @IBAction func switchArticleType(_ sender: UIButton) {
         if sender.tag == 101 {
+            titleItem.title = articleTitle.title
             pageViewController.setViewControllers([articleController], direction: .reverse, animated: true, completion: nil)
         }
         else {
+            titleItem.title = articleTitle.chineseTitle
             pageViewController.setViewControllers([translationController], direction: .forward, animated: true, completion: nil)
         }
     }
@@ -57,6 +63,8 @@ extension ArticleContainerController: UIPageViewControllerDataSource {
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         
+        titleItem.title = articleTitle.title
+        
         if viewController.isKind(of: TranslationController.self) {
             return articleController
         }
@@ -66,10 +74,12 @@ extension ArticleContainerController: UIPageViewControllerDataSource {
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
         
+        titleItem.title = articleTitle.chineseTitle
+        
         if viewController.isKind(of: ArticleController.self) {
             return translationController
         }
-        
         return nil
     }
 }
+

@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>CNPPopupController.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>FMDB.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -22,7 +27,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>36CD09FF8FDF8214E7558904691D589D</key>
+		<key>6D396D309B3DA8B98DFB2ACCA348F077</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>D2D17D2E6A8AD8B5A2D1F30A3032805E</key>
 		<dict>
 			<key>primary</key>
 			<true/>

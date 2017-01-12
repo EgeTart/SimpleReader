@@ -1,14 +1,17 @@
 PODS:
+  - CNPPopupController (0.3.3)
   - FMDB (2.6.2):
     - FMDB/standard (= 2.6.2)
   - FMDB/standard (2.6.2)
 
 DEPENDENCIES:
+  - CNPPopupController (= 0.3.3)
   - FMDB (= 2.6.2)
 
 SPEC CHECKSUMS:
+  CNPPopupController: 59b06290762f68beab5fb0bbfa87eb4dcbefb7de
   FMDB: 854a0341b4726e53276f2a8996f06f1b80f9259a
 
-PODFILE CHECKSUM: 2c14f9188c57b4bace431056f673e1704f5a33ff
+PODFILE CHECKSUM: 24e44aedf56df7982d35a3f10fe7cb8d8832ef02
 
 COCOAPODS: 1.0.1

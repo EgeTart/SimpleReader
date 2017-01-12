@@ -91,9 +91,9 @@
 		F61EEE881E26871700611FB7 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				F6866BDB1E24A76500E3E110 /* ArticleController.swift */,
-				F6866BD91E24A35B00E3E110 /* ArticleContainerController.swift */,
 				F68C38331E23ECF8005B7BFB /* TitleListController.swift */,
+				F6866BD91E24A35B00E3E110 /* ArticleContainerController.swift */,
+				F6866BDB1E24A76500E3E110 /* ArticleController.swift */,
 				F6866BDD1E24A77400E3E110 /* TranslationController.swift */,
 			);
 			name = Controllers;
