@@ -30,6 +30,7 @@ class TitleListController: UIViewController {
         titleTableView.rowHeight = UITableViewAutomaticDimension
         titleTableView.estimatedRowHeight = 60.0
         titleTableView.tableFooterView = UIView()
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -38,9 +39,15 @@ class TitleListController: UIViewController {
             articleContainerController.articleTitle = selectedArticleTitle
         }
     }
+    
+    @IBAction func showSearchBar(_ sender: UIBarButtonItem) {
+        let searchController = UISearchController(searchResultsController: nil)
+        searchController.searchBar.delegate = self
+        present(searchController, animated: true, completion: nil)
+    }
 }
 
-
+// MARK: - UITableViewDataSource
 extension TitleListController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -59,7 +66,7 @@ extension TitleListController: UITableViewDataSource {
     }
 }
 
-
+// MARK: - UITableViewDelegate
 extension TitleListController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -71,4 +78,30 @@ extension TitleListController: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
+}
+
+// MARK: - 简单文章搜索
+extension TitleListController: UISearchBarDelegate {
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.text = nil
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+
+        let searchText = searchBar.text!.trimmingCharacters(in: CharacterSet.whitespaces)
+        dismiss(animated: true, completion: nil)
+        
+        if searchText != "" {
+            for (index, articleTitle) in articlesTitles.enumerated() {
+                if articleTitle.title.lowercased().contains(searchText.lowercased()) || articleTitle.chineseTitle.contains(searchText) {
+                    let indexPath = IndexPath(row: index, section: 0)
+                    titleTableView.scrollToRow(at: indexPath, at: .top, animated: true)
+                    break
+                }
+            }
+        }
+        
+        searchBar.text = nil
+    }
 }

@@ -109,6 +109,10 @@ class ArticleController: UIViewController {
         articleTextView.frame = view.bounds
     }
     
+    func preferredContentSizeChanged(notification: Notification) {
+        articleTextView.font = UIFont.preferredFont(forTextStyle: .body)
+    }
+    
     func createArticleTextView() {
 
         let attributesString = NSAttributedString(string: article, attributes: normalAttributes)
@@ -136,6 +140,11 @@ class ArticleController: UIViewController {
         articleTextView.addGestureRecognizer(tapGestureRecognizer)
     }
     
+    /// 高亮单词级别内的单词
+    ///
+    /// - Parameters:
+    ///   - satrtLevel: 开始级别
+    ///   - endLevel: 结束级别
     func highlightWords(satrtLevel: Int, endLevel: Int) {
         
         clearHighlight()
@@ -160,10 +169,6 @@ class ArticleController: UIViewController {
         articleTextView.textStorage.setAttributes(normalAttributes, range: NSMakeRange(0, (article as NSString).length))
     }
     
-    func preferredContentSizeChanged(notification: Notification) {
-        articleTextView.font = UIFont.preferredFont(forTextStyle: .body)
-    }
-    
     @IBAction func highlightWords(_ sender: UIBarButtonItem) {
         if isHighlight {
             clearHighlight()
@@ -178,20 +183,31 @@ class ArticleController: UIViewController {
     }
     
     func tapOnTextView(gestureRecognizer: UITapGestureRecognizer) {
+        
+        if isFilterRangeViewShowed {
+            filterRangeView.removeFromSuperview()
+            parentScrollView.isScrollEnabled = true
+            isFilterRangeViewShowed = false
+        }
 
+        // 获取单击的位置
         let tapPosition = gestureRecognizer.location(in: articleTextView)
 
+        // 获取单词在textview中的位置
         guard let textPosition = articleTextView.closestPosition(to: tapPosition) else {
             return
         }
         
+        // 获取单词在textview中的范围
         guard let textRange = articleTextView.tokenizer.rangeEnclosingPosition(textPosition, with: .word, inDirection: UITextLayoutDirection.right.rawValue) else {
             return
         }
 
+        // 高亮显示单词
         if let tapedWord = articleTextView.text(in: textRange) {
             print(tapedWord)
             
+            // 从textRange的到range, 以便设置单词的高亮
             let location = articleTextView.offset(from: articleTextView.beginningOfDocument, to: textRange.start)
             let length = articleTextView.offset(from: textRange.start, to: textRange.end)
             let range = NSMakeRange(location, length)
@@ -204,6 +220,12 @@ class ArticleController: UIViewController {
         
     }
     
+    /// 显示选中的单词
+    ///
+    /// - Parameters:
+    ///   - word: 选中的单词
+    ///   - level: 单词级别, 词库中可能没有对应单词, 因此level的类型为 Int?
+    ///   - range: 单词在textview的范围, 用来设置文本属性
     func showSelectedWordPopup(word: String, level: Int?, range: NSRange) {
         
         let paragraphStyle = NSMutableParagraphStyle()
@@ -228,6 +250,7 @@ class ArticleController: UIViewController {
         confirmButton.backgroundColor = UIColor(colorLiteralRed: 0.46, green: 0.8, blue: 1.0, alpha: 1.0)
         confirmButton.layer.cornerRadius = 5
         
+        // 取消选中单词的高亮
         confirmButton.selectionHandler = { button in
             self.articleTextView.textStorage.setAttributes(self.normalAttributes, range: range)
             self.selectedWordPopup.dismiss(animated: true)
@@ -257,11 +280,9 @@ class ArticleController: UIViewController {
         isFilterRangeViewShowed = !isFilterRangeViewShowed
     }
     
-    @IBAction func changeFontSize(_ sender: UIBarButtonItem) {
-    }
 }
 
-
+// MARK: - UITextViewDelegate
 extension ArticleController: UITextViewDelegate {
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
@@ -286,10 +307,17 @@ extension ArticleController: UITextViewDelegate {
                 isHideToobar = true
             }
         }
+        
+        if isFilterRangeViewShowed {
+            filterRangeView.removeFromSuperview()
+            parentScrollView.isScrollEnabled = true
+            isFilterRangeViewShowed = false
+        }
     }
     
 }
 
+// MARK: - NHRangeSliderViewDelegate 响应slider的值变化, 进行单词过滤
 extension ArticleController: NHRangeSliderViewDelegate {
     
     func sliderValueChanged(slider: NHRangeSlider?) {

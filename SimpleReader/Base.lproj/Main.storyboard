@@ -30,18 +30,18 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Im2-Ka-3xm" id="9tE-dc-Miv">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="dYM-IU-Tuq">
-                                                    <rect key="frame" x="15" y="2" width="37.5" height="23.5"/>
+                                                    <rect key="frame" x="15" y="1" width="38" height="24"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
-                                                    <nil key="textColor"/>
+                                                    <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ndq-Ft-coB">
-                                                    <rect key="frame" x="15" y="25.5" width="51.5" height="17.5"/>
+                                                    <rect key="frame" x="15" y="25" width="52" height="18"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                                                     <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -61,7 +61,13 @@
                             <constraint firstAttribute="trailing" secondItem="z1n-p8-ZQq" secondAttribute="trailing" id="yX5-XK-jU8"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="文章列表" id="9pv-Ir-gx9"/>
+                    <navigationItem key="navigationItem" title="文章列表" id="9pv-Ir-gx9">
+                        <barButtonItem key="rightBarButtonItem" systemItem="search" id="nx0-8i-9vA">
+                            <connections>
+                                <action selector="showSearchBar:" destination="BYZ-38-t0r" id="s8s-vi-dyZ"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="titleTableView" destination="z1n-p8-ZQq" id="SHG-tA-33V"/>
                         <segue destination="bXw-u7-hva" kind="show" identifier="ShowArticle" id="8gN-oL-Bgu"/>
@@ -185,11 +191,6 @@
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="ev5-pt-sFu"/>
-                                    <barButtonItem image="fontsize_icon" id="HMd-qE-IIe">
-                                        <connections>
-                                            <action selector="changeFontSize:" destination="mEg-wz-zd6" id="6RS-hi-1RI"/>
-                                        </connections>
-                                    </barButtonItem>
                                 </items>
                                 <color key="tintColor" red="0.40377155170000001" green="0.76452047410000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </toolbar>
@@ -256,10 +257,16 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="fl9-r4-ppY" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Aan-Je-GOD">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="Aan-Je-GOD">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="tintColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="tintColor" red="0.08235294118" green="0.84705882349999995" blue="0.76862745099999996" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="barTintColor" red="0.070588235294117646" green="0.12941176470588234" blue="0.20392156862745098" alpha="1" colorSpace="calibratedRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                            <color key="textColor" red="0.082352941176470587" green="0.84705882352941175" blue="0.76862745098039209" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="textShadowColor" red="0.41568627450000001" green="0.72941176470000002" blue="0.90588235289999997" alpha="1" colorSpace="calibratedRGB"/>
+                        </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -273,7 +280,6 @@
     </scenes>
     <resources>
         <image name="filter_icon" width="30" height="30"/>
-        <image name="fontsize_icon" width="30" height="30"/>
         <image name="hightlight_icon" width="30" height="30"/>
     </resources>
 </document>
